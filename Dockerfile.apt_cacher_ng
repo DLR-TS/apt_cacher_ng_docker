@@ -1,0 +1,33 @@
+FROM ubuntu:20.04
+
+
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV http_proxy "$HTTP_PROXY"
+ENV https_proxy "$HTTPS_PROXY"
+ENV no_proxy "$NO_PROXY"
+
+VOLUME ["/var/cache/apt-cacher-ng"]
+
+#SHELL ["/bin/bash", "-c"]
+
+
+
+RUN apt-get update -y && \
+        # Install apt-cacher-ng package
+        apt-get install apt-cacher-ng -y && \
+        # Clean up
+        rm -rf /var/lib/apt/lists/*
+
+EXPOSE 3142
+
+RUN if [ ! -z "$HTTP_PROXY" ]; then echo "Proxy: ${HTTP_PROXY}" >> /etc/apt-cacher-ng/acng.conf ; fi
+
+
+CMD chmod 777 /var/cache/apt-cacher-ng && \
+        # Append PassThroughPattern config for SSL/TLS proxying (optional)
+        echo "PassThroughPattern: .*" >> /etc/apt-cacher-ng/acng.conf && \
+        # Start the service
+        /etc/init.d/apt-cacher-ng start && \
+        # Output all logs of apt-cacher-ng
+        tail -f /var/log/apt-cacher-ng/*

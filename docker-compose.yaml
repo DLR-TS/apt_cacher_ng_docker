@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  apt-cacher-ng:
+    image: apt-cacher-ng:latest
+    container_name: apt-cacher-ng
+    hostname: apt-cacher-ng
+    restart: always
+    networks:
+      - apt-cacher-ng
+    build:
+      context: .
+      dockerfile: Dockerfile.apt_cacher_ng
+      args:
+        - HTTP_PROXY=${HTTP_PROXY:-}
+        - HTTPS_PROXY=${HTTPS_PROXY:-}
+        - NO_PROXY=${NO_PROXY:-}
+    ports:
+      - 3142:3142
+    volumes:
+      - apt-cacher-ng-cache:/var/cache/apt-cacher-ng
+
+networks:
+  apt-cacher-ng:
+    name: apt-cacher-ng
+    external: false
+
+volumes:
+  apt-cacher-ng-cache:

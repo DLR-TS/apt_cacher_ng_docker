@@ -1,0 +1,28 @@
+# This Dockerfile provides a minimal usage example for a consumer to benefit
+# from the Apt-Cacher NG service provided by the project
+
+# To build run the following:
+#    source proxy.env
+#    docker build --network host \
+#                 --arg HTTP_PROXY="${HTTP_PROXY}" 
+#                 --arg HTTPS_PROXY="${HTTPS_PROXY}" \
+#                 --file Dockerfile.apt_cacher_ng_consumer .
+
+FROM ubuntu:20.04 as apt_cacher_ng_consumer2
+
+
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG NO_PROXY
+
+ENV http_proxy "$HTTP_PROXY"
+ENV https_proxy "$HTTPS_PROXY"
+ENV no_proxy "$NO_PROXY"
+
+RUN apt-get update && apt-get install -y curl
+
+RUN apt-get update && apt-get install -y cowsay
+RUN /usr/games/cowsay "Hello, Apt-Cacher NG! Consumer #2"
+
+
+
