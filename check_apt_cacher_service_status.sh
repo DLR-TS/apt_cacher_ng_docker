@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-url='http://127.0.0.1:3142/'
+url='http://host.docker.internal:3142/'
 status=$(curl --silent \
               --output /dev/null \
               --head \
