@@ -63,9 +63,9 @@ clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
 	docker volume rm ${DOCKER_VOLUME_NAME} || true
 
 .PHONY: check_apt_cacher_service
-check_apt_cacher_service: ## returns the status of the apt-cacher ng service
+check_apt_cacher_service: ## Returns the status of the apt-cacher ng service
 	@bash check_apt_cacher_service_status.sh
 
 .PHONY: get_cache_statistics
-get_cache_statistics:
+get_cache_statistics: ## Returns the caching statistics of  apt cacher ng
 	@bash get_cache_statistics.sh
