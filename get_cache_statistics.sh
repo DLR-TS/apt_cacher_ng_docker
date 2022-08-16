@@ -3,7 +3,14 @@
 function echoerr { echo "$@" >&2; exit 1;}
 SCRIPT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-cache_statistics=$(curl --silent http://host.docker.internal:3142/acng-report.html?doCount=Count+Data#stats | \
+
+if [ -f /.dockerenv ]; then
+    url='http://host.docker.internal:3142/'
+else
+    url='http://127.0.0.1:3142/'
+fi
+
+cache_statistics=$(curl --silent "${url}/acng-report.html?doCount=Count+Data#stats" | \
                    sed -e "s|<td|\n<td|g" | \
                    grep td | \
                    grep colcont | \

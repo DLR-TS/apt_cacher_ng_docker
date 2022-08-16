@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 
-url='http://host.docker.internal:3142/'
+
+if [ -f /.dockerenv ]; then
+    url='http://host.docker.internal:3142/'
+else
+    url='http://127.0.0.1:3142/'
+fi
+
 status=$(curl --silent \
               --output /dev/null \
               --head \
