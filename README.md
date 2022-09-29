@@ -125,6 +125,14 @@ A complete dockerfile is provided in this project for this example (Dockerfile.a
 ### Apt-Cacher NG Statistics Dashboard
 While Apt-Cacher is running caching statistics can be found via the web interface at: http://127.0.0.1:3142/acng-report.html
 
+### Cache Directory
+when you execute "make up" a docker volume is created for apt cache located in the current directory and called ".cache".
+This directory cache directory is preserved regardless of the state docker on the host system.  To manually wipe this
+cache you can run:
+```bash
+make clean
+```
+
 
 ## Proxy Configuration
 The provide apt cacher ng service works behind a proxy. To enable a proxy
