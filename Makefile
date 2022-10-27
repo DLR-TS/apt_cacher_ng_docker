@@ -1,5 +1,7 @@
 SHELL:=/bin/bash
 
+include apt_cacher_ng_docker.mk
+
 ROOT_DIR:=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
 MAKEFLAGS += --no-print-directory
 
@@ -62,12 +64,6 @@ clean: clean_apt_cacher_ng_cache
 	docker rm $$(docker ps -a -q --filter "ancestor=${TAG}") 2> /dev/null || true
 	docker rmi $$(docker images -q ${PROJECT}) 2> /dev/null || true
 
-.PHONY: start_apt_cacher_ng
-start_apt_cacher_ng: up## starts apt-cacher-ng service
-
-.PHONY: stop_apt_cacher_ng
-stop_apt_cacher_ng: down ## starts apt-cacher-ng service
-
 .PHONY: clean_apt_cacher_ng_cache
 clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
 	docker run -v ${DOCKER_VOLUME_MOUNT_POINT}:/var/cache/apt-cacher-ng -it apt-cacher-ng /bin/bash -c 'rm -rf /var/cache/apt-cacher-ng/*'
@@ -75,10 +71,3 @@ clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
 	docker volume rm ${DOCKER_VOLUME_NAME} 2> /dev/null || true
 	rm -rf "${DOCKER_VOLUME_MOUNT_POINT}" || true
 
-.PHONY: check_apt_cacher_service
-check_apt_cacher_service: ## Returns the status of the apt-cacher ng service
-	@bash check_apt_cacher_service_status.sh
-
-.PHONY: get_cache_statistics
-get_cache_statistics: ## Returns the caching statistics of  apt cacher ng
-	@bash get_cache_statistics.sh
