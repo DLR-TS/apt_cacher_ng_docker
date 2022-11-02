@@ -1,6 +1,7 @@
 
 ROOT_DIR=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
-apt_cacher_ng_docker_MAKEFILE_PATH:= $(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST))")")
+#apt_cacher_ng_docker_MAKEFILE_PATH:= $(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST))")")
+apt_cacher_ng_docker_MAKEFILE_PATH:=$(shell realpath "$(shell dirname "$(lastword $(MAKEFILE_LIST))")")
 
 
 MAKEFLAGS += --no-print-directory
