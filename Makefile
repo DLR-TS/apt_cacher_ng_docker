@@ -1,27 +1,22 @@
 SHELL:=/bin/bash
 
-include apt_cacher_ng_docker.mk
+DEFAULT_GOAL := help
+
 
 ROOT_DIR:=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
 MAKEFLAGS += --no-print-directory
 
 .EXPORT_ALL_VARIABLES:
-DOCKER_BUILDKIT?=1
-DOCKER_CONFIG?=
-
-DOCKER_VOLUME_NAME=apt-cacher-ng-cache
-DOCKER_VOLUME_MOUNT_POINT=/var/cache/apt-cacher-ng
-DOCKER_VOLUME_MOUNT_POINT=${ROOT_DIR}/.cache
+DOCKER_VOLUME_NAME:=apt-cacher-ng-cache
+DOCKER_VOLUME_MOUNT_POINT:=/var/cache/apt-cacher-ng
+DOCKER_VOLUME_MOUNT_POINT:=${ROOT_DIR}/.cache
+DOCKER_BUILDX_CACHE_DIR:=${ROOT_DIR}/buildx
 
 PROJECT="apt-cacher-ng"
 VERSION="latest"
 TAG="${PROJECT}:${VERSION}"
 
-DOCKER_GID=$(shell getent group docker | cut -d: -f3)
-UID := $(shell id -u)
-GID := $(shell id -g)
-
-DEFAULT_GOAL := help
+include apt_cacher_ng_docker.mk
 
 .PHONY: help
 help:
@@ -35,8 +30,6 @@ create_docker_volume: ## creates the apt_cacher_ng cache docker volume
       --opt device=${DOCKER_VOLUME_MOUNT_POINT} \
       --opt o=bind \
       ${DOCKER_VOLUME_NAME}
-
-
 
 .PHONY: build_apt_cacher_ng_consumer1_example
 build_apt_cacher_ng_consumer1_example: ## builds a apt cacher consumer1 example
@@ -53,10 +46,10 @@ build_apt_cacher_ng_consumer2_example: ## builds a apt cacher consumer2 example
 .PHONY: up
 up: create_docker_volume## start apt_cacher_ng service
 	docker compose up --detach --no-recreate && echo "Apt-Cacher NG statistics dashboard is located at: http://127.0.0.1:3142/acng-report.html"
-	@sleep 1s && make check_apt_cacher_service --no-print-directory
+	@rm -rf ${DOCKER_BUILDX_CACHE_DIR}
 
 .PHONY: down
-down: get_cache_statistics ## stop apt_cacher_ng service
+down: ## stop apt_cacher_ng service
 	docker compose down
 
 .PHONY: clean

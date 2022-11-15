@@ -5,15 +5,22 @@ MAKEFLAGS += --no-print-directory
 
 APT_CACHER_NG_DOCKER_MAKEFILE_PATH:=$(shell realpath "$(shell dirname "$(lastword $(MAKEFILE_LIST))")")
 
-
-MAKEFLAGS += --no-print-directory
+.EXPORT_ALL_VARIABLES:
+DOCKER_CONFIG:=${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}
 
 .PHONY: start_apt_cacher_ng
-start_apt_cacher_ng: ## starts apt-cacher-ng service
-	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make up
+start_apt_cacher_ng: _start_apt_cacher_ng check_apt_cacher_service ## starts apt-cacher-ng service
 
 .PHONY: stop_apt_cacher_ng
-stop_apt_cacher_ng: ## starts apt-cacher-ng service
+stop_apt_cacher_ng: get_cache_statistics _stop_apt_cacher_ng ## starts apt-cacher-ng service
+
+.PHONY: _start_apt_cacher_ng
+_start_apt_cacher_ng:
+	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && \
+	make up
+
+.PHONY: _stop_apt_cacher_ng
+_stop_apt_cacher_ng:
 	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make down
 
 .PHONY: check_apt_cacher_service

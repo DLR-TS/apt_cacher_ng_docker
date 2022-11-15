@@ -3,7 +3,6 @@
 function echoerr { echo "$@" >&2; exit 1;}
 SCRIPT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-
 if [ -f /.dockerenv ]; then
     url='http://host.docker.internal:3142/'
 else
