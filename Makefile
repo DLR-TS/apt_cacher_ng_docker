@@ -65,10 +65,9 @@ clean: clean_apt_cacher_ng_cache
 	docker rm $$(docker ps -a -q --filter "ancestor=${TAG}") 2> /dev/null || true
 	docker rmi $$(docker images -q ${PROJECT}) 2> /dev/null || true
 
-.PHONY: clean_apt_cacher_ng_cache
-clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
+.PHONY: _clean_apt_cacher_ng_cache
+_clean_apt_cacher_ng_cache:
 	docker run -v ${DOCKER_VOLUME_MOUNT_POINT}:/var/cache/apt-cacher-ng -it apt-cacher-ng /bin/bash -c 'rm -rf /var/cache/apt-cacher-ng/*'
-	docker run -v ${DOCKER_VOLUME_MOUNT_POINT}:/var/cache/apt-cacher-ng -it apt-cacher-ng /bin/bash -c 'ls -la /var/cache/apt-cacher-ng/ && pwd'
 	docker volume rm ${DOCKER_VOLUME_NAME} 2> /dev/null || true
 	rm -rf "${DOCKER_VOLUME_MOUNT_POINT}" || true
 

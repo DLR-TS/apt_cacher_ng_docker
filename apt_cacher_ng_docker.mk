@@ -23,6 +23,10 @@ _start_apt_cacher_ng:
 _stop_apt_cacher_ng:
 	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make down
 
+.PHONY: clean_apt_cacher_ng_cache
+clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
+	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make _clean_apt_cacher_ng_cache 
+
 .PHONY: check_apt_cacher_service
 check_apt_cacher_service: ## Returns the status of the apt-cacher ng service
 	@cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash check_apt_cacher_service_status.sh
