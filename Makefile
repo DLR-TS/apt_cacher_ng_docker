@@ -44,7 +44,15 @@ build_apt_cacher_ng_consumer2_example: ## builds a apt cacher consumer2 example
                  --file Dockerfile.apt_cacher_ng_consumer2 .
 
 .PHONY: up
-up: create_docker_volume## start apt_cacher_ng service
+up: ## start apt_cacher_ng service
+	@if [ "$$(docker container inspect -f '{{.State.Status}}' ${PROJECT} 2>/dev/null )" == "running" ]; then \
+		echo "Apt-Cacher NG already running statistics dashboard is located at: http://127.0.0.1:3142/acng-report.html"; \
+    else \
+        cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && make _up;\
+    fi
+
+.PHONY: _up
+_up: create_docker_volume ## start apt_cacher_ng service
 	docker compose up --detach --no-recreate && echo "Apt-Cacher NG statistics dashboard is located at: http://127.0.0.1:3142/acng-report.html"
 	@rm -rf ${DOCKER_BUILDX_CACHE_DIR}
 
