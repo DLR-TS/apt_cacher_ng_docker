@@ -9,7 +9,6 @@ fi
 
 status=$(curl --silent \
               --retry 5 \
-              --retry-all-errors \
               --retry-max-time 2 \
               --output /dev/null \
               --head \
