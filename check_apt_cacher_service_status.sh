@@ -7,6 +7,7 @@ else
     url='http://127.0.0.1:3142/'
 fi
 
+sleep 1s
 status=$(curl --silent \
               --retry 5 \
               --retry-max-time 2 \
