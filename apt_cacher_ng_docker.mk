@@ -30,6 +30,7 @@ clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
 .PHONY: check_apt_cacher_service
 check_apt_cacher_service: ## Returns the status of the apt-cacher ng service
 	@cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash check_apt_cacher_service_status.sh
+	@cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash purge_apt_cacher_damaged_packages.sh 
 
 .PHONY: get_cache_statistics
 get_cache_statistics: ## Returns the caching statistics of  apt cacher ng
