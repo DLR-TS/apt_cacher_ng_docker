@@ -2,9 +2,9 @@
 
 url='http://127.0.0.1:3142/'
 status=$(curl --silent \
-              --retry 2 \
+              --retry 4 \
               --retry-delay 1 \
-              --retry-max-time 2 \
+              --retry-max-time 4 \
               --output /dev/null \
               --head \
               --location \
@@ -19,9 +19,9 @@ esac
 
 url='http://host.docker.internal:3142/'
 status=$(curl --silent \
-              --retry 2 \
+              --retry 4 \
               --retry-delay 1 \
-              --retry-max-time 2 \
+              --retry-max-time 4 \
               --output /dev/null \
               --head \
               --location \
