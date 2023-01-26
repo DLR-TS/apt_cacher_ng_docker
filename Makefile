@@ -58,7 +58,7 @@ _up: create_docker_volume ## start apt_cacher_ng service
 
 .PHONY: down
 down: ## stop apt_cacher_ng service
-	docker compose down
+	docker compose down --remove-orphans
 
 .PHONY: clean
 clean: clean_apt_cacher_ng_cache
