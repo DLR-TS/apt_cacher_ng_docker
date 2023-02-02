@@ -8,7 +8,7 @@ MAKEFLAGS += --no-print-directory
 
 .EXPORT_ALL_VARIABLES:
 DOCKER_VOLUME_NAME:=apt-cacher-ng-cache
-DOCKER_VOLUME_MOUNT_POINT:=/var/cache/apt-cacher-ng
+#DOCKER_VOLUME_MOUNT_POINT:=/var/cache/apt-cacher-ng
 DOCKER_VOLUME_MOUNT_POINT:=${ROOT_DIR}/.cache
 DOCKER_BUILDX_CACHE_DIR:=${ROOT_DIR}/buildx
 
