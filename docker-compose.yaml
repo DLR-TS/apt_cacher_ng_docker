@@ -6,6 +6,8 @@ services:
     container_name: apt-cacher-ng
     hostname: apt-cacher-ng
     restart: always
+    volumes:
+      - ./acng.conf:/etc/apt-cacher-ng/acng.conf:ro,Z
     networks:
       - apt-cacher-ng
     build:

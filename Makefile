@@ -66,7 +66,7 @@ clean: clean_apt_cacher_ng_cache
 	docker rmi $$(docker images -q ${PROJECT}) 2> /dev/null || true
 
 .PHONY: _clean_apt_cacher_ng_cache
-_clean_apt_cacher_ng_cache:
+_clean_apt_cacher_ng_cache: down
 	docker run -v ${DOCKER_VOLUME_MOUNT_POINT}:/var/cache/apt-cacher-ng -it apt-cacher-ng /bin/bash -c 'rm -rf /var/cache/apt-cacher-ng/*'
 	docker volume rm ${DOCKER_VOLUME_NAME} 2> /dev/null || true
 	rm -rf "${DOCKER_VOLUME_MOUNT_POINT}" || true

@@ -1,3 +1,7 @@
 .git
-.cache
+.buildNodeID
+.token_seed
+.token_seed.lock
 buildx
+.cache
+
