@@ -9,10 +9,10 @@ APT_CACHER_NG_DOCKER_MAKEFILE_PATH:=$(shell realpath "$(shell dirname "$(lastwor
 DOCKER_CONFIG:=${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}
 
 .PHONY: start_apt_cacher_ng
-start_apt_cacher_ng: _start_apt_cacher_ng check_apt_cacher_service ## starts apt-cacher-ng service
+start_apt_cacher_ng: _start_apt_cacher_ng check_apt_cacher_service ## Starts the apt-cacher-ng service, same as `up`
 
 .PHONY: stop_apt_cacher_ng
-stop_apt_cacher_ng: get_cache_statistics _stop_apt_cacher_ng ## starts apt-cacher-ng service
+stop_apt_cacher_ng: get_cache_statistics _stop_apt_cacher_ng ## Stops the apt-cacher-ng service, same as `down`
 
 .PHONY: _start_apt_cacher_ng
 _start_apt_cacher_ng:
@@ -24,7 +24,7 @@ _stop_apt_cacher_ng:
 	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make down
 
 .PHONY: clean_apt_cacher_ng_cache
-clean_apt_cacher_ng_cache: ## clears the apt cacher ng apt cache
+clean_apt_cacher_ng_cache: ## Clears/deletes the apt cacher ng apt cache
 	cd "${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}" && make _clean_apt_cacher_ng_cache 
 
 .PHONY: check_apt_cacher_service
