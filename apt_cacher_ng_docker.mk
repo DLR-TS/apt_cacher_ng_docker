@@ -1,5 +1,5 @@
 
-ifndef APT_CACHER_NG_DOCKER_MAKEFILE_PATH 
+ifeq ($(filter apt_cacher_ng_docker.mk, $(notdir $(MAKEFILE_LIST))), apt_cacher_ng_docker.mk)
 
 MAKEFLAGS += --no-print-directory
 
