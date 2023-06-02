@@ -27,7 +27,7 @@ RUN if [ ! -z "$HTTP_PROXY" ]; then echo "Proxy: ${HTTP_PROXY}" >> /etc/apt-cach
 CMD chmod 777 /var/cache/apt-cacher-ng && \
         # Append PassThroughPattern config for SSL/TLS proxying (optional)
 #        sed -i "s|/var/log/apt-cacher-ng|/var/cache/apt-cacher-ng|g" && \
-        #echo "PassThroughPattern: .*" >> /etc/apt-cacher-ng/acng.conf && \
+        echo "PassThroughPattern: ^(.*):443$" >> /etc/apt-cacher-ng/acng.conf && \
         # Start the service
         /etc/init.d/apt-cacher-ng start && \
         # Output all logs of apt-cacher-ng
