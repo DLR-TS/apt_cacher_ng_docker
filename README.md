@@ -162,4 +162,5 @@ the provided environment file:
 source disable_apt_cacher_ng.env
 ```
 
-
+> **⚠️ WARNING:**
+> This will only work with the recommended consumer approach with the DOCKER_CONFIG env var.

@@ -29,8 +29,13 @@ clean_apt_cacher_ng_cache: ## Clears/deletes the apt cacher ng apt cache
 
 .PHONY: check_apt_cacher_service
 check_apt_cacher_service: ## Returns the status of the apt-cacher ng service
-	@cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash check_apt_cacher_service_status.sh
-	@cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash purge_apt_cacher_damaged_packages.sh 
+	@if [ "$$APT_CACHER_NG_ENABLED" = "false" ]; then \
+        echo "INFO: Apt Cacher ng disabled, skipping apt cacher ng status check."; \
+        exit 0; \
+    else \
+        cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash check_apt_cacher_service_status.sh; \
+        cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && bash purge_apt_cacher_damaged_packages.sh; \
+    fi
 
 .PHONY: get_cache_statistics
 get_cache_statistics: ## Returns the caching statistics of  apt cacher ng
