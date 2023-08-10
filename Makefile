@@ -47,8 +47,12 @@ build_apt_cacher_ng_consumer2_example: ## builds a apt cacher consumer2 example
 
 .PHONY: up
 up: ## Start apt_cacher_ng service
-	@if [ "$$(docker container inspect -f '{{.State.Status}}' ${PROJECT} 2>/dev/null )" == "running" ]; then \
-		echo "Apt-Cacher NG already running statistics dashboard is located at: http://127.0.0.1:3142/acng-report.html"; \
+
+	@if [ "$$APT_CACHER_NG_ENABLED" = "false" ]; then \
+		echo "INFO: Apt Cacher ng disabled, exiting. To re-enable it unset the environmental variable: 'APT_CACHER_NG_ENABLED' with 'unset APT_CACHER_NG_ENABLED' or set it to true."; \
+        exit 0; \
+    elif [ "$$(docker container inspect -f '{{.State.Status}}' ${PROJECT} 2>/dev/null )" == "running" ]; then \
+        echo "Apt-Cacher NG already running statistics dashboard is located at: http://127.0.0.1:3142/acng-report.html"; \
     else \
         cd ${APT_CACHER_NG_DOCKER_MAKEFILE_PATH} && make _up;\
     fi

@@ -148,6 +148,18 @@ export HTTP_PROXY=http://someproxy:3124
 make build_apt_cacher_ng && make start_apt_cacher_ng
 ```
 
+## Disabling Apt Cacher Ng ad hoc
+Sometimes it may be necessary to disable Apt Cacher Ng. This can be done by 
+setting the environmental variable `APT_CACHER_NG_ENABLED` to false.
+One-off disabling apt-cacher-ng:
+```bash
+APT_CACHER_NG_ENABLED=false make up
+```
+Sometimes it may be necessary to disable apt-cacher-ng persistently in the case
+when it is causing issues or during CI processes. This can be done by sourcing
+the provided environment file:
+```bash
+source disable_apt_cacher_ng.env
+```
 
-## Apt-Cacher NG behind a corporate proxy
 
