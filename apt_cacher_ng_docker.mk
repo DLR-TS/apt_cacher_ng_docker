@@ -6,7 +6,7 @@ MAKEFLAGS += --no-print-directory
 APT_CACHER_NG_DOCKER_MAKEFILE_PATH:=$(shell realpath "$(shell dirname "$(lastword $(MAKEFILE_LIST))")")
 
 .EXPORT_ALL_VARIABLES:
-DOCKER_CONFI?=${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}
+DOCKER_CONFIG?=${APT_CACHER_NG_DOCKER_MAKEFILE_PATH}
 
 .PHONY: start_apt_cacher_ng
 start_apt_cacher_ng: _start_apt_cacher_ng check_apt_cacher_service ## Starts the apt-cacher-ng service, same as `up`
